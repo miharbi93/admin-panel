@@ -158,13 +158,13 @@
                 <div class="collapse" id="forms">
                   <ul class="nav nav-collapse">
                     <li>
-                      <a href="forms/forms.html">
+                      <a href="../vmm/vmm_info.php">
                         <span class="sub-item">Manage VMM</span>
                       </a>
                     </li>
 
                     <li>
-                      <a href="forms/forms.html">
+                      <a href="../who-we-are/whoami.php">
                         <span class="sub-item">Who we are </span>
                       </a>
                     </li>
