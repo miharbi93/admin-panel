@@ -26,6 +26,14 @@ $openingDay = htmlspecialchars($vmmData['opening_day'] ?? 'N/A');
 $closingDay = htmlspecialchars($vmmData['closing_day'] ?? 'N/A');
 $openingTime = htmlspecialchars($vmmData['opening_time'] ?? 'N/A');
 $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
+
+
+include 'handlers/portfolio_queries.php'; // Include the queries file
+
+
+// Fetch portfolio items with images
+
+$portfolioItems = getPortfolioItemsWithImages();
 ?>
 
 <!doctype html>
@@ -449,7 +457,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 			</div>
 		</div>
 		<div class="container-fluid">
-			<div class="row">
+			<!-- <div class="row">
 				<div class="col-lg-12 col-12">
 					<div class="owl-carousel portfolio-slider">
 						<div class="single-pf">
@@ -486,6 +494,29 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 						</div>
 					</div>
 				</div>
+			</div> -->
+			<div class="row">
+
+				<div class="col-lg-12 col-12">
+
+					<div class="owl-carousel portfolio-slider">
+
+						<?php foreach ($portfolioItems as $item): ?>
+
+							<div class="single-pf">
+
+								<img src="admin/portfolio-info/<?php echo $item['image_path']; ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
+
+								<a href="portfolio.php?id=<?php echo $item['portfolio_item_id']; ?>" class="btn">View Details</a>
+
+							</div>
+
+						<?php endforeach; ?>
+
+					</div>
+
+				</div>
+
 			</div>
 		</div>
 	</section>
@@ -545,11 +576,6 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 						</div>
 						<!-- Table List -->
 						<ul class="table-list">
-
-
-
-
-
 							<li>1. Academic Writing</li>
 							<li>2. Research Guidance</li>
 							<li>3. Thesis Editing</li>
@@ -674,7 +700,6 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 							<p>Specializing in marine research, consultation, community engagement, and women empowerment for sustainable conservation.</p>
 							<!-- Social -->
 							<ul class="social">
-
 								<li><a href="<?php echo $youtube; ?> " target="_blank""><i class=" icofont-youtube"></i></a></li>
 								<li><a href="<?php echo $twitter; ?> " target="_blank"><i class="icofont-twitter"></i></a></li>
 								<li><a href="mailto:<?php echo $email; ?>"><i class="icofont-email"></i></a></li>
