@@ -1,9 +1,14 @@
+<?php 
+
+$role = $_SESSION['role'];
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Marine Zanzibar</title>
+  <title>Admin Panel</title>
   <meta
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
@@ -60,10 +65,9 @@
       <div class="sidebar-logo">
         <!-- Logo Header -->
         <div class="logo-header" data-background-color="dark">
-          <a href="index.html" class="logo">
+          <a href="../system-settings/system_info" class="logo">
             <img
-
-              alt="navbar brand"
+              alt=" [  <?php echo $role ; ?> Navigation Panel ]"
               class="navbar-brand"
               height="20" />
           </a>
@@ -91,7 +95,7 @@
                 class="collapsed"
                 aria-expanded="false">
                 <i class="fas fa-home"></i>
-                <p>Dashboard</p>
+                <p>Dashboard </p>
                 <span class="caret"></span>
               </a>
               <div class="collapse" id="dashboard">
@@ -119,7 +123,7 @@
               <div class="collapse" id="base">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../system-settings/system_info.php">
+                    <a href="../system-settings/system_info">
                       <span class="sub-item">System Information</span>
                     </a>
                   </li>
@@ -135,12 +139,12 @@
               <div class="collapse" id="sidebarLayouts">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../contact/company_contact.php">
+                    <a href="../contact/company_contact">
                       <span class="sub-item">Company Contact</span>
                     </a>
                   </li>
                   <li>
-                    <a href="../contact/list_management_contact.php">
+                    <a href="../contact/list_management_contact">
                       <span class="sub-item">Management Contacts</span>
                     </a>
                   </li>
@@ -156,13 +160,13 @@
               <div class="collapse" id="forms">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../vmm/vmm_info.php">
+                    <a href="../vmm/vmm_info">
                       <span class="sub-item">Manage VMM</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="../who-we-are/whoami.php">
+                    <a href="../who-we-are/whoami">
                       <span class="sub-item">Who we are </span>
                     </a>
                   </li>
@@ -219,8 +223,15 @@
           </ul>
         </div>
         </li>
+        <?php if ($role === 'admin'): ?>
+              <li class="nav-item">
+                <a href="../users/list_manage_users">
+                  <i class="fas fa-users"></i>
+                  <p>Manage Users</p>
+                </a>
+              </li>
+            <?php endif; ?>
         </ul>
       </div>
     </div>
   </div>
-  <!-- End Sidebar -->

@@ -8,5 +8,8 @@ RewriteRule ^([^/]+)/?$ $1.php [L]
 RewriteCond %{THE_REQUEST} \s([^.]+)\.php[?\s] [NC]
 RewriteRule ^ %1 [R=301,L]
 
+# Redirect to login.php when accessing the admin directory
+RewriteRule ^admin/?$ /login.php [L]
+
 # Set default page to login.php
 DirectoryIndex login.php

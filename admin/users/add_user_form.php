@@ -1,6 +1,5 @@
 <?php
-session_start(); // Start the session
-
+session_start();
 if (!isset($_SESSION['user_id'])) {
     // User is not logged in, redirect to login page
     header("Location: ../login");
@@ -8,8 +7,7 @@ if (!isset($_SESSION['user_id'])) {
 }
 include '../components/header.php';
 
-
-// Success and error messages
+// Check for success message
 if (isset($_SESSION['success'])) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
           <script>
@@ -22,6 +20,7 @@ if (isset($_SESSION['success'])) {
     unset($_SESSION['success']);
 }
 
+// Check for error message
 if (isset($_SESSION['error'])) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
           <script>
@@ -37,8 +36,8 @@ if (isset($_SESSION['error'])) {
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Add New Slide</h3>
-            <ul class="breadcrumbs mb -3">
+            <h3 class="fw-bold mb-3">User  Management</h3>
+            <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="#">
                         <i class="icon-home"></i>
@@ -56,21 +55,22 @@ if (isset($_SESSION['error'])) {
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Slide Info</div>
+                        <div class="card-title">User  Information</div>
                     </div>
 
-                    <form method="POST" action="add_slide_image_handler.php" enctype="multipart/form-data">
+                    <!-- Start of the form -->
+
+                    <form method="POST" action="add_user_handler.php" enctype="multipart/form-data">
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="title">Slide Title</label>
+                                    <label for="username">Username</label>
                                     <input
                                         type="text"
                                         class="form-control"
-                                        id="title"
-                                        name="title"
-                                        required
-                                        placeholder="Enter Slide Title" /> <!-- Removed value attribute -->
+                                        id="username"
+                                        name="username" 
+                                        placeholder="Enter Username" required />
                                 </div>
                             </div>
                         </div>
@@ -78,78 +78,56 @@ if (isset($_SESSION['error'])) {
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="description">Slide Description</label>
-                                    <textarea
-                                        class="form-control"
-                                        id="description"
-                                        name="description"
-                                        required
-                                        placeholder="Enter Slide Description"></textarea> <!-- Removed content -->
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-md-8 col-lg-12">
-                                <div class="form-group">
-                                    <label for="slideimage">Slide Image</label>
+                                    <label for="password">Password</label>
                                     <input
-                                        type="file"
+                                        type="password"
                                         class="form-control"
-                                        id="slideimage"
-                                        required
-                                        name="slideimage"
-                                        accept="image/*" />
+                                        id="password"
+                                        name="password" 
+                                        placeholder="Enter Password" required />
                                 </div>
                             </div>
                         </div>
 
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
-                                <div class="form-group d-flex justify-content-center">
-                                    <div id="image_preview" style="border: 1px solid #ccc; padding: 10px; text-align: center; border-radius: 5px; overflow: hidden; width: 200px; height: 200px; display: flex; align-items: center; justify-content: center;">
-                                        <img id="slide_image" src="" alt="Slide Image Preview" style="width: 100%; height: 100%; object-fit: cover; display: none;" />
-                                        <p id="no_image" style="display: block;">No image uploaded.</p>
-                                    </div>
+                                <div class="form-group">
+                                    <label for="email">Email</label>
+                                    <input
+                                        type="email" 
+                                        class="form-control"
+                                        id="email"
+                                        name="email" 
+                                        placeholder="Enter Email Address" required />
                                 </div>
                             </div>
                         </div>
+
+                        <div class="row">
+                            <div class="col-md-8 col-lg-12">
+                                <div class="form-group">
+                                    <label for="role">Role</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="user">User </option>
+                                        <option value="admin">Admin</option>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Hidden field for blocked status -->
+                        <input type="hidden" name="blocked" value="0" />
 
                         <div class="card-action">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='manage_slide_image'">Cancel</button>
-
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='list_manage_users'">Cancel</button>
                         </div>
-                    </form>
+                    </form> <!-- End of the form -->
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-<script>
-    // JavaScript to handle slide image preview
-    document.getElementById('slideimage').addEventListener('change', function(event) {
-        const file = event.target.files[0];
-        const preview = document.getElementById('slide_image');
-        const noImageText = document.getElementById('no_image');
-
-        if (file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
-                preview.src = e.target.result;
-                preview.style.display = 'block';
-                noImageText.style.display = 'none';
-            }
-            reader.readAsDataURL(file);
-        } else {
-            preview.src = '';
-            preview.style.display = 'none';
-            noImageText.style.display = 'block';
-        }
-    });
-</script>
-
 
 <?php
 include '../components/footer.php';

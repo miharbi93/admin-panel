@@ -1,5 +1,11 @@
 <?php
 session_start(); // Start the session
+
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header("Location: ../login");
+    exit();
+}
 include '../components/header.php';
 require '../Database.php'; // Include the Database class
 

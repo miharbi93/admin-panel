@@ -13,16 +13,16 @@ require '../Database.php'; // Include the Database class
 $db = new Database();
 
 // Initialize variables
-$staff = null;
+$user = null;
 
 // Check if an ID is provided in the URL
 if (isset($_GET['id'])) {
     $id = $_GET['id'];
-    $query = "SELECT * FROM management_contact WHERE id = :id";
+    $query = "SELECT * FROM tb_users WHERE id = :id"; // Updated table name
     $stmt = $db->prepare($query);
     $stmt->bindParam(':id', $id);
     $stmt->execute();
-    $staff = $stmt->fetch(PDO::FETCH_ASSOC);
+    $user = $stmt->fetch(PDO::FETCH_ASSOC);
 }
 
 // Check for success message
@@ -55,7 +55,7 @@ if (isset($_SESSION['error'])) {
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Management Contact</h3>
+            <h3 class="fw-bold mb-3">User  Information</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="#">
@@ -74,25 +74,18 @@ if (isset($_SESSION['error'])) {
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <div class="card-title">Update Management Staff Information</div>
+                        <div class="card-title">Update User Information</div>
                     </div>
 
                     <!-- Start of the form -->
-                    <form method="POST" action="update_management_contact_handler.php" enctype="multipart/form-data">
-                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($staff['id']); ?>" /> <!-- Hidden field for ID -->
+                    <form method="POST" action="update_user_handler.php">
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($user['id']); ?>" /> <!-- Hidden field for ID -->
 
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="staff_image"> Staff Image</label>
-                                    <input type="file" class="form-control" id="staff_image" name="staff_image" accept="image/*" onchange="previewImage(event)" />
-                                    <?php if (!empty($staff['staff_image'])): ?>
-                                        <div id="image_preview_container" style="margin-top: 10px; display: flex; justify-content: center; align-items: center;">
-                                            <img id="image_preview" src="<?php echo htmlspecialchars($staff['staff_image']); ?>" alt="Current Image" style="width: 200px; height: 200px; object-fit: cover; border-radius: 50%;" />
-                                        </div>
-                                    <?php else: ?>
-                                        <p>No image uploaded.</p>
-                                    <?php endif; ?>
+                                    <label for="username">Username</label>
+                                    <input type="text" class="form-control" id="username" name="username" placeholder="Enter Username" value="<?php echo htmlspecialchars($user['username']); ?>" required />
                                 </div>
                             </div>
                         </div>
@@ -100,8 +93,8 @@ if (isset($_SESSION['error'])) {
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="staff_name">Full Name</label>
-                                    <input type="text" class="form-control" id="staff_name" name="staff_name" placeholder="Enter Staff Name" value="<?php echo htmlspecialchars($staff['staff_name']); ?>" required />
+                                    <label for="email">Email</label>
+                                    <input type="email" class="form-control" id="email" name="email" placeholder="Enter Email Address" value="<?php echo htmlspecialchars($user['email']); ?>" required />
                                 </div>
                             </div>
                         </div>
@@ -109,8 +102,8 @@ if (isset($_SESSION['error'])) {
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="staff_position">Position</label>
-                                    <input type="text" class="form-control" id="staff_position" name="staff_position" placeholder="Enter Position. Eg Manager/Director" value="<?php echo htmlspecialchars($staff['staff_position']); ?>" required />
+                                    <label for="password">Password</label>
+                                    <input type="password" class="form-control" id="password" name="password" placeholder="Enter New Password (leave blank to keep current)" />
                                 </div>
                             </div>
                         </div>
@@ -118,8 +111,11 @@ if (isset($_SESSION['error'])) {
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="staff_email">Email</label>
-                                    <input type="email" class="form-control" id="staff_email" name="staff_email" placeholder="Enter Email Address" value="<?php echo htmlspecialchars($staff['staff_email']); ?>" required />
+                                    <label for="role">Role</label>
+                                    <select class="form-control" id="role" name="role" required>
+                                        <option value="admin" <?php echo ($user['role'] == 'admin') ? 'selected' : ''; ?>>Admin</option>
+                                        <option value="user" <?php echo ($user['role'] == 'user') ? 'selected' : ''; ?>>User  </option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -127,15 +123,18 @@ if (isset($_SESSION['error'])) {
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
                                 <div class="form-group">
-                                    <label for="staff_phone">Phone Number</label>
-                                    <input type="text" class="form-control" id="staff_phone" name="staff_phone" placeholder="Enter Phone Number" value="<?php echo htmlspecialchars($staff['staff_phone']); ?>" required />
+                                    <label for="blocked">Blocked</label>
+                                    <select class="form-control" id="blocked" name="blocked" required>
+                                        <option value="0" <?php echo ($user['blocked'] == 0) ? 'selected' : ''; ?>>No</option>
+                                        <option value="1" <?php echo ($user['blocked'] == 1) ? 'selected' : ''; ?>>Yes</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
 
                         <div class="card-action">
                             <button type="submit" class="btn btn-primary">Update</button>
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='list_management_contact'">Cancel</button>
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='list_manage_users'">Cancel</button>
                         </div>
                     </form> <!-- End of the form -->
                 </div>
@@ -144,26 +143,6 @@ if (isset($_SESSION['error'])) {
     </div>
 </div>
 
-<script>
-    function previewImage(event) {
-        const imagePreview = document.getElementById('image_preview');
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function(e) {
-            imagePreview.src = e.target.result;
-            imagePreview.style.display = 'block'; // Show the image
-        }
-
-        if (file) {
-            reader.readAsDataURL(file); // Convert the file to a data URL
-        } else {
-            imagePreview.src = ""; // Clear the preview if no file is selected
-            imagePreview.style.display = 'none'; // Hide the image
-        }
-    }
-</script>
-
 <?php
 include '../components/footer.php';
-?>
+?> 

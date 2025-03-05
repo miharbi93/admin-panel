@@ -39,30 +39,17 @@ if (isset($_SESSION['error'])) {
 // Create a new instance of the Database class
 $db = new Database();
 
-// Fetch data from slides_images and portfolio_items tables
-// $query = "SELECT * FROM portfolio_items , portfolio_images WHERE portfolio_items.id = portfolio_images.portfolio_item_id";
-// $query = "SELECT p.*, 
-//        (SELECT pi.image_path 
-//         FROM portfolio_images pi 
-//         WHERE pi.portfolio_item_id = p.id 
-//         LIMIT 1) AS image_path FROM portfolio_items p;" ;
-
-$query = "SELECT p.*, 
-       (SELECT pi.image_path 
-        FROM portfolio_images pi 
-        WHERE pi.portfolio_item_id = p.id 
-        LIMIT 1) AS image_path 
-        FROM portfolio_items p 
-        ORDER BY p.created_at DESC;";
+// Fetch data from users table
+$query = "SELECT * FROM tb_users ORDER BY id DESC;";
 $stmt = $db->prepare($query);
 $stmt->execute();
-$slides = $stmt->fetchAll(PDO::FETCH_ASSOC);
+$users = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
-            <h3 class="fw-bold mb-3">Portfolio Items</h3>
+            <h3 class="fw-bold mb-3">Website User List</h3>
             <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="#">
@@ -81,42 +68,50 @@ $slides = $stmt->fetchAll(PDO::FETCH_ASSOC);
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Portfolio Items Information List</h4>
+                        <h4 class="card-title">Manage User Information</h4>
                     </div>
                     <div class="card-body">
 
                         <div class="table-responsive">
                             <div class="ms-md-auto py-2 mt-4 mb-5 py-md-0 text-end">
-                                <a href="add_portfolio_info" class="btn btn-primary btn-round">Add New</a>
+                                <a href="add_user_form" class="btn btn-primary btn-round">Add New User</a>
                             </div>
                             <table id="basic-datatables" class="display table table-striped table-hover">
                                 <thead>
                                     <tr>
                                         <th>SN</th>
-                                        <th>Title</th>
-                                        <th>Description</th>
-                                        <th>Image</th>
+                                        <th>Username</th>
+                                        <th>Email</th>
+                                        <th>Role</th>
+                                        <th>Blocked</th>
                                         <th>Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php foreach ($slides as $index => $slide): ?>
+                                    <?php foreach ($users as $index => $user): ?>
                                         <tr>
                                             <td><?php echo $index + 1; ?></td>
-                                            <td><?php echo htmlspecialchars($slide['title']); ?></td>
-                                            <td><?php echo htmlspecialchars($slide['description']); ?></td>
-                                            <td><img src="<?php echo htmlspecialchars($slide['image_path']); ?>" alt="Slide Image" style="width: 150px; height: 70px; border-radius: 5%;"></td>
+                                            <td><?php echo htmlspecialchars($user['username']); ?></td>
+                                            <td><?php echo htmlspecialchars($user['email']); ?></td>
+                                            <td><?php echo htmlspecialchars($user['role']); ?></td>
+
                                             <td>
-                                                <div class="btn-group" role="group" aria-label="Action buttons">
-                                                    <a href="update_portfolio_info.php?id=<?php echo htmlspecialchars($slide['id']); ?>" class="btn btn-success btn-sm">
-                                                        <i class="fas fa-pen-square"></i> Edit
-                                                    </a>
-                                                    <a href="delete_portfolio_info.php?id=<?php echo htmlspecialchars($slide['id']); ?>"
-                                                        class="btn btn-danger btn-sm"
-                                                        onclick="return confirm('Are you sure you want to delete this record?');">
-                                                        <i class="fas fa-trash"></i> Delete
-                                                    </a>
-                                                </div>
+                                                <span
+                                                    class="badge <?php echo $user['blocked'] ? 'bg-danger' : 'bg-info'; ?>">
+                                                    <?php echo $user['blocked'] ? 'Yes' : 'No'; ?>
+                                                </span>
+                                            </td>
+                                            <td>
+                                                <a href="update_user_form.php?id=<?php echo htmlspecialchars($user['id']); ?>"
+                                                    class="btn btn-success btn-sm"> <i class="fas fa-pen-square"></i>
+                                                    Edit</a>
+                                                <a href="delete_user_handler.php?id=<?php echo htmlspecialchars($user['id']); ?>"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('Are you sure you want to delete this user?');">
+                                                    <i class="fas fa-trash"></i> Delete</a>
+                                                <a href="block_user_handler.php?id=<?php echo htmlspecialchars($user['id']); ?>"
+                                                    class="btn <?php echo $user['blocked'] ? 'btn-warning' : 'btn-primary'; ?> btn-sm">
+                                                    <?php echo $user['blocked'] ? 'Unblock' : 'Block'; ?></a>
                                             </td>
                                         </tr>
                                     <?php endforeach; ?>
@@ -131,7 +126,7 @@ $slides = $stmt->fetchAll(PDO::FETCH_ASSOC);
 </div>
 
 <script>
-    $(document).ready(function() {
+    $(document).ready(function () {
         $("#basic-datatables").DataTable({});
     });
 </script>

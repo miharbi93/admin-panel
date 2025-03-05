@@ -23,6 +23,6 @@ if (isset($_GET['id'])) {
 }
 
 // Redirect back to the management contact page
-header("Location: list_management_contact.php"); // Change this to your actual list page
+header("Location: list_management_contact"); // Change this to your actual list page
 exit;
 ?>

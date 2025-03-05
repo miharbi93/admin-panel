@@ -11,6 +11,8 @@ if (!isset($_SESSION['user_id'])) {
 // If the user is logged in, you can access their information
 $username = $_SESSION['username'];
 
+$role = $_SESSION['role'];
+
 ?>
 
 <div class="main-panel">
@@ -98,7 +100,7 @@ $username = $_SESSION['username'];
                   >
                     <div class="avatar-sm">
                       <img
-                        src="../assets/img/profile.jpg"
+                        src="../assets/img/profile.jpeg"
                         alt="..."
                         class="avatar-img rounded-circle"
                       />
@@ -106,12 +108,13 @@ $username = $_SESSION['username'];
                     <span class="profile-username">
                       <span class="op-7">Hi,</span>
                       <span class="fw-bold"><?php echo htmlspecialchars($username); ?></span>
+                      
                     </span>
                   </a>
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
                       <li>
-                        <a class="dropdown-item" href="#">Account Setting</a>
+                        <a class="dropdown-item" href="../system-settings/system_info">Account Setting</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../logout.php">Logout</a>
                       </li>

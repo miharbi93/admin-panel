@@ -138,7 +138,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 											<ul class="nav menu">
 												<li><a href="index">Home</a></li>
 												<li><a href="about">About us</a></li>
-												<li><a href="service.html">Services </a></li>
+												<li><a href="service">Services </a></li>
 												<li class="active"><a href="contact">Contact Us</a></li>
 											</ul>
 										</nav>
@@ -183,7 +183,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 							<div class="contact-us-left">
 								<!--Start Google-map -->
 								<div >
-									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.819123115465!2d39.22356485000001!3d-6.2519237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cdc09091c396f%3A0x880daa38ef7d3b87!2sBuyu%20Mosque!5e0!3m2!1sen!2stz!4v1664671111111!5m2!1sen!2stz" width="600" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+									<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3988.819123115465!2d39.22356485000001!3d-6.2519237!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x185cdc09091c396f%3A0x880daa38ef7d3b87!2sBuyu%20Mosque!5e0!3m2!1sen!2stz!4v1664671111111!5m2!1sen!2stz" width="700" height="600" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 								</div>
 								<!--/End Google-map -->
 							</div>
@@ -304,7 +304,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
 										<ul>
 											<li><a href="index"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
 											<li><a href="about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-											<li><a href="service.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+											<li><a href="service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
 											<li><a href="contact"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
 										</ul>
 									</div>

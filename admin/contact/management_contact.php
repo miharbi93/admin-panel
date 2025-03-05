@@ -1,5 +1,10 @@
 <?php
 session_start();
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header("Location: ../login");
+    exit();
+}
 include '../components/header.php';
 
 
@@ -141,7 +146,7 @@ if (isset($_SESSION['error'])) {
 
                         <div class="card-action">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='list_management_contact.php'">Cancel</button>
+                            <button type="button" class="btn btn-danger" onclick="window.location.href='list_management_contact'">Cancel</button>
                         </div>
                     </form> <!-- End of the form -->
                 </div>

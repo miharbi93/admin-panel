@@ -169,7 +169,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
                   <ul class="nav menu">
                     <li><a href="index">Home</a></li>
                     <li class="active"><a href="about">About us</a></li>
-                    <li><a href="service.html">Services </a></li>
+                    <li><a href="service">Services </a></li>
                     <li><a href="contact">Contact Us</a></li>
                   </ul>
                 </nav>
@@ -215,7 +215,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
               <div class="single-main">
                 <!-- News Head -->
                 <div class="news-head">
-                  <img src="img/beaches/image_resize.jpeg" alt="#" />
+                  <img src="img/picha6.jpeg" alt="No image" />
                 </div>
                 <!-- News Title -->
                 <h1 class="news-title">
@@ -249,15 +249,15 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
                       <div class="col-lg-6 col-md-6 col-12">
                         <div class="single-image">
                           <img
-                            src="img/beaches/zanzi img/IMG-20241002-WA0066.jpg"
-                            alt="#" />
+                            src="img/picha4.jpg"
+                            alt="No image" />
                         </div>
                       </div>
                       <div class="col-lg-6 col-md-6 col-12">
                         <div class="single-image">
                           <img
-                            src="img/beaches/zanzi img/with womesapic.jpg"
-                            alt="#" />
+                            src="img/picha5.jpg"
+                            alt="No image" />
                         </div>
                       </div>
                     </div>
@@ -435,10 +435,10 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
               <div class="row">
                 <div class="col-lg-6 col-md-6 col-12">
                   <ul>
-                    <li><a href="index.php"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-                    <li><a href="about.php"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                    <li><a href="service.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-                    <li><a href="contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+                    <li><a href="index"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+                    <li><a href="about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+                    <li><a href="service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                    <li><a href="contact"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
                   </ul>
                 </div>
               </div>

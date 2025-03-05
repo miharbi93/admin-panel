@@ -19,9 +19,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         exit();
     }
 
+    // Fetch existing data to compare
+    $stmt = $db->prepare("SELECT staff_name, staff_position, staff_email, staff_phone, staff_image FROM management_contact WHERE id = :id");
+    $stmt->bindParam(':id', $id);
+    $stmt->execute();
+    $existing_data = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    // Initialize a flag to track if any changes were made
+    $changes_made = false;
+    $log_message = []; // Array to hold log messages
+
     // Prepare the update query
     $query = "UPDATE management_contact SET staff_name = :staff_name, staff_position = :staff_position, staff_email = :staff_email, staff_phone = :staff_phone";
-    
+
     // Check if a new image is uploaded
     if (!empty($_FILES['staff_image']['name'])) {
         // Handle the image upload
@@ -40,6 +50,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Move the uploaded file to the target directory
         if (move_uploaded_file($_FILES["staff_image"]["tmp_name"], $target_file)) {
             $query .= ", staff_image = :staff_image WHERE id = :id";
+            $changes_made = true; // Mark that a change was made
+            $log_message[] = "Updated staff image to: $target_file"; // Add to log message
             $stmt = $db->prepare($query);
             $stmt->bindParam(':staff_image', $target_file);
         } else {
@@ -61,13 +73,51 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Execute the query
     if ($stmt->execute()) {
-        $_SESSION['success'] = "Contact updated successfully!";
+        // Check for changes and log them
+        if ($existing_data['staff_name'] !== $staff_name) {
+            $log_message[] = "Updated staff name to: $staff_name";
+            $changes_made = true;
+        }
+        if ($existing_data['staff_position'] !== $staff_position) {
+            $log_message[] = "Updated staff position to: $staff_position";
+            $changes_made = true;
+        }
+        if ($existing_data['staff_email'] !== $staff_email) {
+            $log_message[] = "Updated staff email to: $staff_email";
+            $changes_made = true;
+        }
+        if ($existing_data['staff_phone'] !== $staff_phone) {
+            $log_message[] = "Updated staff phone to: $staff_phone";
+            $changes_made = true;
+        }
+        if (isset($target_file) && $existing_data['staff_image'] !== $target_file) {
+            $log_message[] = "Updated staff image to: $target_file";
+            $changes_made = true;
+        }
+
+        if ($changes_made) {
+            $_SESSION['success'] = "Contact updated successfully!";
+        } else {
+            $_SESSION['success'] = "No changes were made.";
+        }
     } else {
         $_SESSION['error'] = "Failed to update contact: " . implode(", ", $stmt->errorInfo());
     }
 
+    // Log the changes if any were made
+    if ($changes_made) {
+        $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+        $action = implode(', ', $log_message); // Combine log messages into a single string
+        $activityStmt->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+        $activityStmt->bindParam(':action', $action);
+        $activityStmt->execute();
+    }
+
     // Redirect back to the list page
-    header("Location: list_management_contact.php");
+    header("Location: list_management_contact");
     exit();
 }
+
+// Close the database connection
+$db = null;
 ?>

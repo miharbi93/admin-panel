@@ -16,7 +16,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     // Validate required fields
     if (empty($staff_name) || empty($staff_position) || empty($staff_email) || empty($staff_phone)) {
         $_SESSION['error'] = 'All fields are required.';
-        header("Location: management_contact.php");
+        header("Location: management_contact");
         exit;
     }
 
@@ -35,17 +35,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $staff_image_path = $target_file; // Set the image path if upload is successful
             } else {
                 $_SESSION['error'] = 'File upload failed.';
-                header("Location: management_contact.php");
+                header("Location: management_contact");
                 exit;
             }
         } else {
             $_SESSION['error'] = 'Only PNG and JPEG images are allowed.';
-            header("Location: management_contact.php");
+            header("Location: management_contact");
             exit;
         }
     } else {
         $_SESSION['error'] = 'Image upload is required.';
-        header("Location: management_contact.php");
+        header("Location: management_contact");
         exit;
     }
 
@@ -57,7 +57,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($email_count > 0) {
         $_SESSION['error'] = 'This email address is already in use.';
-        header("Location: management_contact.php");
+        header("Location: management_contact");
         exit;
     }
 
@@ -71,12 +71,19 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($stmt->execute()) {
         $_SESSION['success'] = 'Management staff information added successfully.';
+
+        // Log the activity
+        $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+        $action = "Added management staff: $staff_name, Position: $staff_position, Email: $staff_email, Phone: $staff_phone";
+        $activityStmt->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+        $activityStmt->bindParam(':action', $action);
+        $activityStmt->execute();
     } else {
         error_log("Failed to insert management staff: " . implode(", ", $stmt->errorInfo()));
         $_SESSION['error'] = 'Failed to add management staff information.';
     }
 
-    header("Location: management_contact.php");
+    header("Location: management_contact");
     exit;
 }
 

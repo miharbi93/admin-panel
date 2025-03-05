@@ -1,5 +1,5 @@
-
 <?php
+ob_start(); // Start output buffering
 session_start();
 require '../Database.php'; // Include the Database class
 
@@ -35,7 +35,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($stmt->execute()) {
         $_SESSION['success'] = "Updated successfully.";
     } else {
-        $_SESSION['error'] = "Failed to update  image.";
+        $_SESSION['error'] = "Failed to update image.";
     }
 } else {
     $_SESSION['error'] = "Invalid request.";
@@ -44,4 +44,5 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 // Redirect back to the management page
 header("Location: manage_slide_image"); // Change this to the appropriate page
 exit();
+ob_end_flush(); // Flush the output buffer
 ?>

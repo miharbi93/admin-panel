@@ -153,7 +153,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 									<ul class="nav menu">
 										<li class="active"><a href="index">Home</a></li>
 										<li><a href="about">About us</a></li>
-										<li><a href="service.html">Services </a></li>
+										<li><a href="service">Services </a></li>
 										<li><a href="contact">Contact Us</a></li>
 									</ul>
 								</nav>
@@ -185,7 +185,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 									<h1><?php echo htmlspecialchars($slide['title']); ?></h1>
 									<p class="description" style="color: white;"><?php echo htmlspecialchars($slide['description']); ?></p> <!-- Added class for styling -->
 									<div class="button">
-										<a href="service.html" class="btn">Make Appointment</a>
+										<a href="service" class="btn">Make Appointment</a>
 										<a href="about" class="btn primary">Learn More</a>
 									</div>
 								</div>
@@ -433,8 +433,8 @@ $portfolioItems = getPortfolioItemsWithImages();
 						<p>
 							"Feel free to reach out to me anytime! We are here to assist you with any questions or concerns you may have.".</p>
 						<div class="button">
-							<a href="contact.html" class="btn">Contact Now</a>
-							<a href="about.php" class="btn">Learn More <i class="fa fa-long-arrow-right"></i></a>
+							<a href="contact" class="btn">Contact Now</a>
+							<a href="about" class="btn">Learn More <i class="fa fa-long-arrow-right"></i></a>
 						</div>
 					</div>
 				</div>
@@ -457,44 +457,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 			</div>
 		</div>
 		<div class="container-fluid">
-			<!-- <div class="row">
-				<div class="col-lg-12 col-12">
-					<div class="owl-carousel portfolio-slider">
-						<div class="single-pf">
-							<img src="img/beaches/photo-1682687982502-1529b3b33f85.jpeg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/ocean-cleanup-beach-with-birds.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/pexels-asadphoto-457882.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/pexels-jeremy-bishop-1260133-2397653.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/pexels-bella-white-201200-635279.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/pf2.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/pexels-asadphoto-1320674.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-						<div class="single-pf">
-							<img src="img/beaches/istockphoto-498283106-612x612.jpg" alt="#">
-							<a href="portfolio-details.html" class="btn">View Details</a>
-						</div>
-					</div>
-				</div>
-			</div> -->
+			
 			<div class="row">
 
 				<div class="col-lg-12 col-12">
@@ -505,10 +468,9 @@ $portfolioItems = getPortfolioItemsWithImages();
 
 							<div class="single-pf">
 
-								<img src="admin/portfolio-info/<?php echo $item['image_path']; ?>" alt="<?php echo htmlspecialchars($item['title']); ?>">
+								<img src="admin/portfolio-info/<?php echo $item['image_path']; ?>" loading="lazy" alt="<?php echo htmlspecialchars($item['title']); ?>">
 
-								<a href="portfolio.php?id=<?php echo $item['portfolio_item_id']; ?>" class="btn">View Details</a>
-
+								<a href="portfolio?id=<?php echo $item['portfolio_item_id']; ?>" class="btn">View Details</a>
 							</div>
 
 						<?php endforeach; ?>
@@ -557,7 +519,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 							<li>5. Community Engagement</li>
 						</ul>
 						<div class="table-bottom">
-							<a class="btn" href="service.html">Book Now</a>
+							<a class="btn" href="service">Book Now</a>
 						</div>
 						<!-- Table Bottom -->
 					</div>
@@ -583,7 +545,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 							<li>5. Statistical Consulting </li>
 						</ul>
 						<div class="table-bottom">
-							<a class="btn" href="service.html">Book Now</a>
+							<a class="btn" href="service">Book Now</a>
 						</div>
 						<!-- Table Bottom -->
 					</div>
@@ -609,7 +571,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 							<li>5. Expert Advice</li>
 						</ul>
 						<div class="table-bottom">
-							<a class="btn" href="service.html">Book Now</a>
+							<a class="btn" href="service">Book Now</a>
 						</div>
 						<!-- Table Bottom -->
 					</div>
@@ -637,12 +599,12 @@ $portfolioItems = getPortfolioItemsWithImages();
 					<!-- Single Blog -->
 					<div class="single-news">
 						<div class="news-head">
-							<img src="img/beaches/zanzi img/pch1.png" alt="#">
+							<img src="img/picha1.png" alt="Activity Image" loading="lazy">
 						</div>
 						<div class="news-body">
 							<div class="news-content">
 
-								<h2><a href="blog-single.html">Empowering Villagers with Marine and Coastal Conservation Solutions</a></h2>
+								<h2><a href="about">Empowering Villagers with Marine and Coastal Conservation Solutions</a></h2>
 								<p class="text">The activity involves educating villagers on marine and coastal solutions, focusing on sustainable practices to protect the environment. The aim is to raise awareness about preserving marine ecosystems and managing coastal resources responsibly. Community workshops and hands-on training empower locals to take action for a healthier coastline.</p>
 							</div>
 						</div>
@@ -653,12 +615,12 @@ $portfolioItems = getPortfolioItemsWithImages();
 					<!-- Single Blog -->
 					<div class="single-news">
 						<div class="news-head">
-							<img src="img/beaches/zanzi img/pch2.png" alt="#">
+							<img src="img/picha2.png" alt="Activity Image" loading="lazy">
 						</div>
 						<div class="news-body">
 							<div class="news-content">
 
-								<h2><a href="blog-single.html">Research Support for Sustainable Marine and Coastal Solutions.</a></h2>
+								<h2><a href="about">Research Support for Sustainable Marine and Coastal Solutions.</a></h2>
 								<p class="text">Providing research assistance on marine and coastal solutions helps individuals find reliable information on environmental conservation. This support includes guiding them through data analysis, best practices, and sustainable methods. The goal is to aid in informed decision-making for protecting marine ecosystems and coastal areas.</p>
 							</div>
 						</div>
@@ -669,12 +631,12 @@ $portfolioItems = getPortfolioItemsWithImages();
 					<!-- Single Blog -->
 					<div class="single-news">
 						<div class="news-head">
-							<img src="img/beaches/zanzi img/pch3.png" alt="#">
+							<img src="img/picha3.png" alt="Activity Image" loading="lazy">
 						</div>
 						<div class="news-body">
 							<div class="news-content">
 
-								<h2><a href="blog-single.html">Expert Consultancy for Sustainable Marine and Coastal Solutions</a></h2>
+								<h2><a href="about">Expert Consultancy for Sustainable Marine and Coastal Solutions</a></h2>
 								<p class="text">We provide expert consultancy to help individuals and communities address marine and coastal
 									challenges effectively. Our solutions focus on sustainable practices, ensuring the protection and
 									restoration of these vital ecosystems. Whether it's coastal erosion, marine conservation we offer tailored guidance to promote long-term environmental and economic benefits.</p>
@@ -714,10 +676,10 @@ $portfolioItems = getPortfolioItemsWithImages();
 							<div class="row">
 								<div class="col-lg-6 col-md-6 col-12">
 									<ul>
-										<li><a href="index.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
-										<li><a href="blog-single.html"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
+										<li><a href="index"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
+										<li><a href="about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
 										<li><a href="service.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
-										<li><a href="contact.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
+										<li><a href="contact"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
 									</ul>
 								</div>
 							</div>

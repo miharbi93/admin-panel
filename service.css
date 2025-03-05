@@ -1,86 +1,27 @@
-body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f4f4f4;
-  }
-  
-  header {
-    background-color: #0077b6;
-    color: white;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  nav a {
-    margin: 0 15px;
-    color: white;
-    text-decoration: none;
-  }
-  
-  h1, h2 {
-    margin-bottom: 20px;
-  }
-  
-  main {
-    padding: 20px;
-  }
-  
-  #services {
-    display: flex;
-    justify-content: space-around;
-    flex-wrap: wrap;
-  }
-  
-  .service-item {
-    background-color: white;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-    width: 30%;
-    margin-bottom: 20px;
-    text-align: center;
-  }
-  
-  .book-btn {
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
-  #booking form {
-    background-color: white;
-    padding: 20px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    max-width: 600px;
-    margin: 20px auto;
-  }
-  
-  label {
-    display: block;
-    margin-bottom: 10px;
-  }
-  
-  input, select, textarea {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-  }
-  
-  button[type="submit"] {
-    background-color: #0077b6;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    cursor: pointer;
-    border-radius: 5px;
-  }
-  
+.service-item {
+  transition: transform 0.3s;
+}
 
-  
+.service-item:hover {
+  transform: scale(1.05);
+}
+
+h3 {
+  font-size: 1.5rem; /* Adjust font size for headings */
+}
+
+p {
+  font-size: 1rem; /* Adjust font size for paragraphs */
+}
+
+@media (max-width: 576px) {
+  h3 {
+    font-size: 1.25rem; /* Smaller heading size on extra small screens */
+  }
+
+  p {
+    font-size: 0.9rem; /* Smaller paragraph size on extra small screens */
+  }
+}
+
+

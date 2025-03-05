@@ -1,5 +1,12 @@
 <?php
 session_start();
+
+if (!isset($_SESSION['user_id'])) {
+    // User is not logged in, redirect to login page
+    header("Location: ../login");
+    exit();
+}
+
 include '../components/header.php'; // Include your header
 require '../Database.php'; // Include the Database class
 
@@ -69,7 +76,7 @@ $contacts = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <div class="table-responsive">
                             <div class="ms-md-auto py-2 mt-4 mb-5 py-md-0 text-end">
-                                <a href="management_contact.php" class="btn btn-primary btn-round">Add New</a>
+                                <a href="management_contact" class="btn btn-primary btn-round">Add New</a>
                             </div>
                             <table id="basic-datatables" class="display table table-striped table-hover">
                                 <thead>
