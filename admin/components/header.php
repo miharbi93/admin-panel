@@ -116,6 +116,8 @@ $role = $_SESSION['role'];
                       <li>
                         <a class="dropdown-item" href="../system-settings/system_info">Account Setting</a>
                         <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="../system-logs/full_logs_info">System Logs</a>
+                        <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="../logout.php">Logout</a>
                       </li>
                     </div>

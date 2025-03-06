@@ -48,6 +48,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             // Execute the statement
             if ($stmt->execute()) {
                 $_SESSION['success'] = "Data added successfully!";
+
+                // Log the activity
+                if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
+                    $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+                    $action = "Added slide image: $title, Description: $description, Image Path: $target_file";
+                    $activityStmt->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+                    // $activityStmt->bindParam(':username', $_SESSION['username']); // Assuming username is stored in session
+                    $activityStmt->bindParam(':action', $action);
+                    $activityStmt->execute();
+                }
             } else {
                 $_SESSION['error'] = "Error adding slide to the database.";
             }

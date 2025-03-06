@@ -17,12 +17,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         mkdir($target_dir, 0755, true);
     }
 
+    // Fetch existing data for comparison
+    $stmt = $conn->prepare("SELECT title, description FROM portfolio_items WHERE id = :portfolio_item_id");
+    $stmt->bindParam(':portfolio_item_id', $portfolio_item_id);
+    $stmt->execute();
+    $existingData = $stmt->fetch(PDO::FETCH_ASSOC);
+
     // Prepare SQL statement to update portfolio item
     $updateFields = [];
-    if ($title) {
+    if ($title && $existingData['title'] !== $title) {
         $updateFields[] = "title = :title";
     }
-    if ($description) {
+    if ($description && $existingData['description'] !== $description) {
         $updateFields[] = "description = :description";
     }
 
@@ -37,16 +43,29 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $stmt = $conn->prepare($sql);
 
     // Bind parameters
-    if ($title) {
+    if ($title && $existingData['title'] !== $title) {
         $stmt->bindParam(':title', $title);
     }
-    if ($description) {
+    if ($description && $existingData['description'] !== $description) {
         $stmt->bindParam(':description', $description);
     }
     $stmt->bindParam(':portfolio_item_id', $portfolio_item_id);
 
     // Execute the statement
     if ($stmt->execute()) {
+        // Prepare to log changes
+        $logMessages = [];
+
+        // Log title change
+        if ($title && $existingData['title'] !== $title) {
+            $logMessages[] = "Updated title from '{$existingData['title']}' to '$title'";
+        }
+
+        // Log description change
+        if ($description && $existingData['description'] !== $description) {
+            $logMessages[] = "Updated description from '{$existingData['description']}' to '$description'";
+        }
+
         // Fetch existing images for the portfolio item
         $stmt = $conn->prepare("SELECT image_path FROM portfolio_images WHERE portfolio_item_id = :portfolio_item_id");
         $stmt->bindParam(':portfolio_item_id', $portfolio_item_id);
@@ -104,11 +123,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $stmt_image->bindParam(':image_path', $target_file);
                     $stmt_image->bindParam(':old_image_path', $existing_images[$key]['image_path']);
                     $stmt_image->execute();
+
+                    // Log image change
+                    $logMessages[] = "Updated image from '{$existing_images[$key]['image_path']}' to '$target_file'";
                 }
             } else {
                 $_SESSION['error'] = "Error moving uploaded file for image " . ($key + 1);
                 header("Location: update_portfolio_info.php?id=" . $portfolio_item_id);
                 exit();
+            }
+        }
+
+        // Log all changes if any
+        if (!empty($logMessages) && isset($_SESSION['user_id'])) {
+            $log_entry = "Updated portfolio item ID: $portfolio_item_id. " . implode(', ', $logMessages);
+            $stmt_log = $conn->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+            $stmt_log->bindParam(':user_id', $_SESSION['user_id']);
+            $stmt_log->bindParam(':action', $log_entry);
+            if (!$stmt_log->execute()) {
+                error_log("Failed to log activity: " . implode(", ", $stmt_log->errorInfo())); // Log the error
             }
         }
 

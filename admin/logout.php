@@ -7,7 +7,7 @@ if (isset($_SESSION['user_id'])) {
     
     // Log user logout activity
     $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
-    $action = 'User  logged out';
+    $action = 'logged out';
     $activityStmt->bindParam(':user_id', $_SESSION['user_id']);
     $activityStmt->bindParam(':action', $action);
     $activityStmt->execute();

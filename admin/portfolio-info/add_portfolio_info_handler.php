@@ -88,7 +88,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
         // Set a success message if at least one image was uploaded
         if ($uploaded_count > 0) {
-            $_SESSION['success'] = "Portfolio  added successfully with " . $uploaded_count . " images uploaded.";
+            $_SESSION['success'] = "Portfolio added successfully with " . $uploaded_count . " images uploaded.";
+
+            // Log the activity
+            if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
+                $activityStmt = $conn->prepare("INSERT INTO user_activity (user_id,  action) VALUES (:user_id,  :action)");
+                $action = "Added portfolio item: '$title' with $uploaded_count images.";
+                $activityStmt->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+                // $activityStmt->bindParam(':username', $_SESSION['username']); // Assuming username is stored in session
+                $activityStmt->bindParam(':action', $action);
+                $activityStmt->execute();
+            }
         } else {
             $_SESSION['error'] = "Portfolio item added, but no images were uploaded.";
         }

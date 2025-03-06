@@ -1,4 +1,3 @@
-
 <?php
 session_start();
 require '../Database.php'; // Include the Database class
@@ -11,7 +10,7 @@ if (isset($_GET['id'])) {
     $db = new Database();
 
     // Fetch the current blocked status
-    $query = "SELECT blocked FROM tb_users WHERE id = :id";
+    $query = "SELECT username, blocked FROM tb_users WHERE id = :id";
     $stmt = $db->prepare($query);
     $stmt->bindParam(':id', $id, PDO::PARAM_INT);
     $stmt->execute();
@@ -30,6 +29,17 @@ if (isset($_GET['id'])) {
         // Execute the update statement
         if ($updateStmt->execute()) {
             $_SESSION['success'] = $newBlockedStatus ? "User  blocked successfully." : "User  unblocked successfully.";
+
+            // Log the action
+            if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
+                $action = $newBlockedStatus ? "Blocked user: {$user['username']} ( UserID: [ $id ] )" : "Unblocked user: {$user['username']} ( UserID: [ $id ] )";
+                $stmt_log = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+                $stmt_log->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+                $stmt_log->bindParam(':action', $action);
+                if (!$stmt_log->execute()) {
+                    error_log("Failed to log activity: " . implode(", ", $stmt_log->errorInfo())); // Log the error
+                }
+            }
         } else {
             $_SESSION['error'] = "Failed to update user status.";
         }

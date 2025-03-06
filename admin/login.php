@@ -31,7 +31,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
             // Log user login activity
             $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
-            $action = 'User  logged in';
+            $action = 'logged in';
             $activityStmt->bindParam(':user_id', $user['id']);
             $activityStmt->bindParam(':action', $action);
             $activityStmt->execute();

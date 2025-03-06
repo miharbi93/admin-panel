@@ -12,6 +12,12 @@ if (isset($_GET['id'])) {
         // Begin a transaction
         // $db->beginTransaction();
 
+        // Fetch existing data for logging
+        $stmtFetch = $db->prepare("SELECT title FROM portfolio_items WHERE id = ?");
+        $stmtFetch->bindParam(1, $portfolio_item_id);
+        $stmtFetch->execute();
+        $existingItem = $stmtFetch->fetch(PDO::FETCH_ASSOC);
+
         // Prepare the delete statement for portfolio_images
         $stmtImages = $db->prepare("DELETE FROM portfolio_images WHERE portfolio_item_id = ?");
         $stmtImages->bindParam(1, $portfolio_item_id);
@@ -25,6 +31,15 @@ if (isset($_GET['id'])) {
         // Commit the transaction
         // $db->commit();
 
+        // Log the deletion
+        if ($existingItem) {
+            $log_entry = "Deleted portfolio item ID: $portfolio_item_id, Title: '{$existingItem['title']}'";
+            $stmt_log = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+            $stmt_log->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
+            $stmt_log->bindParam(':action', $log_entry);
+            $stmt_log->execute();
+        }
+
         $_SESSION['success'] = 'Deleted successfully.';
     } catch (Exception $e) {
         // Rollback the transaction if something failed
@@ -37,6 +52,6 @@ if (isset($_GET['id'])) {
 }
 
 // Redirect back to the portfolio items list page
-header("Location: manage_portfolio_info.php"); // Change this to your actual list page
+header("Location: manage_portfolio_info"); // Change this to your actual list page
 exit;
 ?>
