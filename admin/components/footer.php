@@ -3,7 +3,7 @@
         <nav class="pull-left">
         </nav>
         <div class="copyright">
-            <span id="current-year"></span>, made with <i class="fa fa-heart heart text-danger"></i> by <a href="#">Miharbi Arafa</a>
+        <span id="current-year"> </span> , Support  </i> Contact <a href="https://wa.me/+255777296653">M Developer</a>
         </div>
     </div>
 </footer>

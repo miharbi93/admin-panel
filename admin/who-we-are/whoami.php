@@ -126,8 +126,9 @@ if (isset($_SESSION['error'])) {
                             <div class="col-md-8 col-lg-12">
                                 <?php if ($videoID): ?>
                                     <div class="video-preview">
-                                        <!-- <h5>Video Preview:</h5> -->
-                                        <iframe width="1190" height="415" src="https://www.youtube.com/embed/<?php echo $videoID; ?>" frameborder="0" allowfullscreen></iframe>
+                                        <div class="video-responsive">
+                                            <iframe src="https://www.youtube.com/embed/<?php echo $videoID; ?>" frameborder="0" allowfullscreen></iframe>
+                                        </div>
                                     </div>
                                 <?php else: ?>
                                     <div class="video-preview">

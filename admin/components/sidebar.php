@@ -2,19 +2,24 @@
 
 $role = $_SESSION['role'];
 
+$systemLogo = $_SESSION['system_logo'] ?? 'default_logo.png';
+
+$systemName = $_SESSION['system_name'] ?? 'Default System Name';
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
   <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <title>Admin Panel</title>
+  <title><?php echo $systemName ?></title>
+
   <meta
     content="width=device-width, initial-scale=1.0, shrink-to-fit=no"
     name="viewport" />
   <link
     rel="icon"
-    href="../assets/img/kaiadmin/favicon.ico"
+    href="<?php echo $systemLogo ?>"
     type="image/x-icon" />
 
   <!-- Fonts and icons -->
@@ -55,6 +60,22 @@ $role = $_SESSION['role'];
     label {
       font-weight: bold;
     }
+
+    .video-responsive {
+    position: relative;
+    overflow: hidden;
+    padding-top: 56.25%; /* 16:9 Aspect Ratio */
+    height: 0;
+}
+
+.video-responsive iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+}
   </style>
 </head>
 
@@ -101,8 +122,8 @@ $role = $_SESSION['role'];
               <div class="collapse" id="dashboard">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="../demo1/index.html">
-                      <span class="sub-item">Dashboard 1</span>
+                    <a href="../dashboard/dashboard">
+                      <span class="sub-item">Dashboard</span>
                     </a>
                   </li>
                 </ul>
@@ -172,31 +193,31 @@ $role = $_SESSION['role'];
                   </li>
 
                   <li>
-                    <a href="forms/forms.html">
+                    <!-- <a href="forms/forms.html">
                       <span class="sub-item">Basic Form</span>
-                    </a>
+                    </a> -->
                   </li>
                 </ul>
               </div>
             </li>
             <li class="nav-item">
               <a data-bs-toggle="collapse" href="#maps">
-                <i class="fas fa-map-marker-alt"></i>
-                <p>Maps Settings</p>
+                <i class="fas fa-list"></i>
+                <p>Service Information</p>
                 <span class="caret"></span>
               </a>
               <div class="collapse" id="maps">
                 <ul class="nav nav-collapse">
                   <li>
-                    <a href="maps/googlemaps.html">
-                      <span class="sub-item">Google Maps</span>
+                    <a href="../service/list_manage_service.php">
+                      <span class="sub-item">Manage Service</span>
                     </a>
                   </li>
-                  <li>
+                  <!-- <li>
                     <a href="maps/jsvectormap.html">
                       <span class="sub-item">Jsvectormap</span>
                     </a>
-                  </li>
+                  </li> -->
                 </ul>
               </div>
             </li>

@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Check if the account is blocked
         if ($user['blocked'] == 1) {
             $_SESSION['login_error'] = "This account is blocked.";
-            header("Location: login.php"); // Redirect back to login
+            header("Location: login.php?status=error");
             exit();
         }
 
@@ -36,16 +36,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $activityStmt->bindParam(':action', $action);
             $activityStmt->execute();
 
-            header("Location: login.php"); // Redirect to the same page to show the Toastr notification
+            header("Location: login.php?status=success");
             exit();
         } else {
             $_SESSION['login_error'] = "Invalid username or password.";
-            header("Location: login.php"); // Redirect back to login
+            header("Location: login.php?status=error");
             exit();
         }
     } else {
         $_SESSION['login_error'] = "Invalid username or password.";
-        header("Location: login.php"); // Redirect back to login
+        header("Location: login.php?status=error");
         exit();
     }
 
@@ -74,7 +74,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="col-8" style="margin-bottom: 40px;">
                                 <a href="../index">Go to Website</a>
                             </div>
-                            <div class="col -4">
+                            <div class="col-4">
                                 <button class="btn btn-lg btn-primary btn-block" type="submit">Login</button>
                             </div>
                         </div>
@@ -87,22 +87,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
         <script>
             $(document).ready(function() {
-                <?php if (isset($_SESSION['login_success'])): ?>
+                const urlParams = new URLSearchParams(window.location.search);
+                const status = urlParams.get('status');
+
+                if (status === 'success') {
+                    // Store username in local storage
+                    localStorage.setItem('username', '<?php echo $_SESSION['username']; ?>');
+
                     toastr.success('Login successful!', 'Success', {
                         positionClass: 'toast-top-right',
-                        timeOut: 3000
+                        timeOut: 1000 // Display for 30 seconds
                     });
                     setTimeout(function() {
-                        window.location.href = 'system-settings/system_info'; // Redirect to the protected page after 3 seconds
-                    }, 3000); // 3000 milliseconds = 3 seconds
-                    <?php unset($_SESSION['login_success']); ?>
-                <?php elseif (isset($_SESSION['login_error'])): ?>
-                    toastr.error('<?php echo $_SESSION['login_error']; ?>', 'Error', {
+                        window.location.href = 'system-settings/system_info'; // Redirect after 30 seconds
+                    }, 1000); // 30000 milliseconds = 30 seconds
+                } else if (status === 'error') {
+                    toastr.error('<?php echo isset($_SESSION['login_error']) ? $_SESSION['login_error'] : ''; ?>', 'Error', {
                         positionClass: 'toast-top-right',
-                        timeOut: 3000
+                        timeOut: 1000
                     });
                     <?php unset($_SESSION['login_error']); ?>
-                <?php endif; ?>
+                }
             });
         </script>
     </body>

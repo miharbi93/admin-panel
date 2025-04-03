@@ -7,6 +7,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 include '../components/header.php';
 
+include '../lock_screen.php';
+
+
 // Success and error messages
 if (isset($_SESSION['success'])) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>

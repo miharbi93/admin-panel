@@ -6,7 +6,11 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../login");
     exit();
 }
+
 include '../components/header.php';
+
+include '../lock_screen.php';
+
 
 // Initialize variables
 $mission = '';
@@ -27,37 +31,46 @@ $stmt->execute();
 $result = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 foreach ($result as $row) {
-    if ($row['meta_field'] === 'mission') {
-        $mission = $row['meta_value'];
-        $ids['mission'] = $row['id']; // Store the ID for mission
-    } elseif ($row['meta_field'] === 'vision') {
-        $vision = $row['meta_value'];
-        $ids['vision'] = $row['id']; // Store the ID for vision
-    } elseif ($row['meta_field'] === 'motto') {
-        $motto = $row['meta_value'];
-        $ids['motto'] = $row['id']; // Store the ID for motto
-    } elseif ($row['meta_field'] === 'opening_day') {
-        $opening_day = $row['meta_value'];
-        $ids['opening_day'] = $row['id']; // Store the ID for opening day
-    } elseif ($row['meta_field'] === 'closing_day') {
-        $closing_day = $row['meta_value'];
-        $ids['closing_day'] = $row['id']; // Store the ID for closing day
-    } elseif ($row['meta_field'] === 'opening_time') {
-        $opening_time = $row['meta_value'];
-        $ids['opening_time'] = $row['id']; // Store the ID for opening time
-    } elseif ($row['meta_field'] === 'closing_time') {
-        $closing_time = $row['meta_value'];
-        $ids['closing_time'] = $row['id']; // Store the ID for closing time
+    switch ($row['meta_field']) {
+        case 'mission':
+            $mission = $row['meta_value'];
+            $ids['mission'] = $row['id'];
+            break;
+        case 'vision':
+            $vision = $row['meta_value'];
+            $ids['vision'] = $row['id'];
+            break;
+        case 'motto':
+            $motto = $row['meta_value'];
+            $ids['motto'] = $row['id'];
+            break;
+        case 'opening_day':
+            $opening_day = $row['meta_value'];
+            $ids['opening_day'] = $row['id'];
+            break;
+        case 'closing_day':
+            $closing_day = $row['meta_value'];
+            $ids['closing_day'] = $row['id'];
+            break;
+        case 'opening_time':
+            $opening_time = $row['meta_value'];
+            $ids['opening_time'] = $row['id'];
+            break;
+        case 'closing_time':
+            $closing_time = $row['meta_value'];
+            $ids['closing_time'] = $row['id'];
+            break;
     }
 }
 
+// Display success or error messages
 if (isset($_SESSION['success'])) {
     echo "<script src='https://cdn.jsdelivr.net/npm/sweetalert2@11'></script>
           <script>
               Swal.fire({
                   icon: 'success',
                   title: 'Success!',
-                  text: '" . $_SESSION['success'] . "',
+                  text: '" . htmlspecialchars($_SESSION['success']) . "',
               });
           </script>";
     unset($_SESSION['success']);
@@ -68,18 +81,19 @@ if (isset($_SESSION['error'])) {
           <script>
               Swal.fire({
                   icon: 'error',
- title: 'Error!',
-                  text: '" . $_SESSION['error'] . "',
+                  title: 'Error!',
+                  text: '" . htmlspecialchars($_SESSION['error']) . "',
               });
           </script>";
     unset($_SESSION['error']);
 }
 ?>
+
 <div class="container">
     <div class="page-inner">
         <div class="page-header">
             <h3 class="fw-bold mb-3">Manage Vision, Mission and Motto</h3>
-            <ul class="breadcrumbs mb -3">
+            <ul class="breadcrumbs mb-3">
                 <li class="nav-home">
                     <a href="#">
                         <i class="icon-home"></i>
@@ -101,7 +115,7 @@ if (isset($_SESSION['error'])) {
                     </div>
 
                     <form method="POST" action="vmm_info_handler.php">
-                        <input type="hidden" name="id" value="<?php echo $ids['mission']; ?>" />
+                        <input type="hidden" name="id" value="<?php echo htmlspecialchars($ids['mission'] ?? ''); ?>" />
 
                         <div class="row">
                             <div class="col-md-8 col-lg-12">
@@ -204,7 +218,7 @@ if (isset($_SESSION['error'])) {
 
                         <div class="card-action">
                             <button type="submit" class="btn btn-primary">Save</button>
-                            <button type="button" class="btn btn-danger" onclick="window.location.href='your_cancel_url_here';">Cancel</button>
+                            <!-- <button type="button" class="btn btn-danger" onclick="window.location.href='your_cancel_url_here';">Cancel</button> -->
                         </div>
                     </form>
                 </div>

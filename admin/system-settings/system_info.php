@@ -9,6 +9,8 @@ if (!isset($_SESSION['user_id'])) {
 
 include '../components/header.php';
 
+include '../lock_screen.php';
+
 
 
 // Initialize variables

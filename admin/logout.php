@@ -17,7 +17,13 @@ if (isset($_SESSION['user_id'])) {
 session_unset();
 session_destroy();
 
-// Redirect to the login page
-header("Location: login.php");
+// Clear local storage (if applicable)
+// You can include a script to clear local storage if you're using it for session management
+echo "<script>
+        console.log('clear data');
+        localStorage.removeItem('username'); // Clear username from local storage
+        localStorage.removeItem('isLocked'); // Clear lock state from local storage
+        window.location.href = 'login.php'; // Redirect to the login page
+      </script>";
 exit();
 ?>

@@ -5,7 +5,11 @@ if (!isset($_SESSION['user_id'])) {
     header("Location: ../login");
     exit();
 }
+
+
 include '../components/header.php';
+include '../lock_screen.php';
+
 require '../Database.php'; // Include your database connection file
 
 // Initialize variables

@@ -5,6 +5,11 @@ $logo = htmlspecialchars($systemInfo['logo']);
 $title = htmlspecialchars($systemInfo['title']);
 
 
+$whoWeAreInfo = require 'handlers/fetch_who_we_are.php';
+$whoInfo = htmlspecialchars($whoWeAreInfo['whoami']);
+$whoYouTubeInfo = htmlspecialchars($whoWeAreInfo['youtube_video_link']);
+
+
 $contactInfo = require 'handlers/fetch_company_contact.php';
 
 // Extract contact information
@@ -385,7 +390,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 					<!-- Start Choose Left -->
 					<div class="choose-left">
 						<h3>Who We Are</h3>
-						<p>Our company specializes in providing expert research-based services, academic support, and consultation on marine-related issues. With a strong foundation in marine science and environmental research, we offer comprehensive solutions tailored to meet the needs of industries, governments, and academic institutions. Our services encompass marine resource management, environmental impact assessments, and sustainable marine practices, ensuring data-driven insights and strategies for ocean and coastal stewardship." </p>
+						<p><?php echo $whoInfo ?></p>
 						<p>We are focusing on:- </p>
 						<div class="row">
 
@@ -413,7 +418,7 @@ $portfolioItems = getPortfolioItemsWithImages();
 								</div>
 							</div>
 							<!--/ End Video Animation -->
-							<a href="<?php echo $youtube; ?>" class="video video-popup mfp-iframe"><i class="fa fa-play"></i></a>
+							<a href="<?php echo $whoYouTubeInfo; ?>" class="video video-popup mfp-iframe"><i class="fa fa-play"></i></a>
 						</div>
 					</div>
 					<!-- End Choose Rights -->

@@ -73,17 +73,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Log the activity only if there are changes
         if (!empty($log_messages)) {
             if (isset($_SESSION['user_id']) && isset($_SESSION['username'])) {
-                $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action) VALUES (:user_id, :action)");
+                $activityStmt = $db->prepare("INSERT INTO user_activity (user_id, action, timestamp) VALUES (:user_id, :action, NOW())");
                 $action = implode(', ', $log_messages); // Combine log messages into a single string
                 $activityStmt->bindParam(':user_id', $_SESSION['user_id']); // Assuming user_id is stored in session
-                // $activityStmt->bindParam(':username', $_SESSION['username']); // Assuming username is stored in session
                 $activityStmt->bindParam(':action', $action);
                 $activityStmt->execute();
             }
         }
 
         // Set success message and redirect
-        $_SESSION['success'] = 'Who Am I information updated successfully.';
+        $_SESSION['success'] = 'Information updated successfully.';
         header("Location: whoami");
         exit;
     } catch (Exception $e) {

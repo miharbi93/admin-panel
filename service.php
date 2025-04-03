@@ -18,6 +18,9 @@ $systemInfo = require 'handlers/fetch_system_info.php';
 $logo = htmlspecialchars($systemInfo['logo']);
 $title = htmlspecialchars($systemInfo['title']);
 
+
+require_once 'handlers/fetch_service.php';
+
 $contactInfo = require 'handlers/fetch_company_contact.php';
 
 // Extract contact information
@@ -55,35 +58,37 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
   <!-- Title -->
   <title><?php echo $title; ?></title>
 
-<!-- Favicon -->
-<link rel="icon" href="admin/system-settings/<?php echo $logo; ?>">
+  <!-- Favicon -->
+  <link rel="icon" href="admin/system-settings/<?php echo $logo; ?>">
 
-<!-- Google Fonts -->
-<link href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap" rel="stylesheet">
+  <!-- Google Fonts -->
+  <link
+    href="https://fonts.googleapis.com/css?family=Poppins:200i,300,300i,400,400i,500,500i,600,600i,700,700i,800,800i,900,900i&display=swap"
+    rel="stylesheet">
 
-<!-- Bootstrap CSS -->
-<link rel="stylesheet" href="css/bootstrap.min.css">
-<!-- Nice Select CSS -->
-<link rel="stylesheet" href="css/nice-select.css">
-<!-- Font Awesome CSS -->
-<link rel="stylesheet" href="css/font-awesome.min.css">
-<!-- icofont CSS -->
-<link rel="stylesheet" href="css/icofont.css">
-<!-- Slicknav -->
-<link rel="stylesheet" href="css/slicknav.min.css">
-<!-- Owl Carousel CSS -->
-<link rel="stylesheet" href="css/owl-carousel.css">
-<!-- Datepicker CSS -->
-<link rel="stylesheet" href="css/datepicker.css">
-<!-- Animate CSS -->
-<link rel="stylesheet" href="css/animate.min.css">
-<!-- Magnific Popup CSS -->
-<link rel="stylesheet" href="css/magnific-popup.css">
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <!-- Nice Select CSS -->
+  <link rel="stylesheet" href="css/nice-select.css">
+  <!-- Font Awesome CSS -->
+  <link rel="stylesheet" href="css/font-awesome.min.css">
+  <!-- icofont CSS -->
+  <link rel="stylesheet" href="css/icofont.css">
+  <!-- Slicknav -->
+  <link rel="stylesheet" href="css/slicknav.min.css">
+  <!-- Owl Carousel CSS -->
+  <link rel="stylesheet" href="css/owl-carousel.css">
+  <!-- Datepicker CSS -->
+  <link rel="stylesheet" href="css/datepicker.css">
+  <!-- Animate CSS -->
+  <link rel="stylesheet" href="css/animate.min.css">
+  <!-- Magnific Popup CSS -->
+  <link rel="stylesheet" href="css/magnific-popup.css">
 
-<!-- Medipro CSS -->
-<link rel="stylesheet" href="css/normalize.css">
-<link rel="stylesheet" href="style.css">
-<link rel="stylesheet" href="css/responsive.css">
+  <!-- Medipro CSS -->
+  <link rel="stylesheet" href="css/normalize.css">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="css/responsive.css">
 </head>
 
 <body>
@@ -108,13 +113,15 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
     <!-- Topbar -->
     <div class="topbar">
       <div class="container d-flex flex-column flex-md-row align-items-center">
-        <img src="admin/system-settings/<?php echo htmlspecialchars($logo); ?>" alt="No image" style="height: 80px; width: auto; margin-bottom: 10px; margin-right: 10px;">
+        <img src="admin/system-settings/<?php echo htmlspecialchars($logo); ?>" alt="No image"
+          style="height: 80px; width: auto; margin-bottom: 10px; margin-right: 10px;">
         <div class="col-lg-6 col-md-7 col-12 text-center text-md-left">
           <label class="responsive-heading"><?php echo $title; ?></label>
         </div>
         <div class="col-lg-6 col-md-5 col-12 text-center text-md-right">
           <ul class="top-contact list-unstyled d-flex flex-column flex-md-row justify-content-md-end">
-            <li class="mr-3"><i class="fa fa-phone"></i><a href="tel:<?php echo $phoneNumber; ?>"><?php echo $phoneNumber; ?></a></li>
+            <li class="mr-3"><i class="fa fa-phone"></i><a
+                href="tel:<?php echo $phoneNumber; ?>"><?php echo $phoneNumber; ?></a></li>
             <li><i class="fa fa-envelope"></i><a href="mailto:<?php echo $email; ?>"><?php echo $email; ?></a></li>
           </ul>
         </div>
@@ -176,35 +183,39 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
     <h2 class="text-center">Explore Our Services</h2>
   </header>
   <section class="container mt-5">
-  <!-- <h2 class="text-center mb-4">Explore Our Services</h2> -->
-  <div class="row mt-3">
+    <!-- <h2 class="text-center mb-4">Explore Our Services</h2> -->
+    <div class="row mt-3">
 
-    <div class="col-12 col-sm-6 col-md-4 service-item mb-4">
-      <h3>Research Assistance</h3>
-      <p>Whether you're a student, researcher, or organization, we provide expert guidance and resources to assist you in your marine and coastal research.</p>
-      <button class="book-btn btn btn-primary" onclick="openBookingForm('Research Assistance')">Book Now</button>
+      <?php if (!empty($services)): ?>
+
+        <?php foreach ($services as $service): ?>
+
+          <div class="col-12 col-sm-6 col-md-4 service-item mb-4">
+
+            <h5><?php echo htmlspecialchars($service['service_name']); ?></h5>
+
+            <p><?php echo htmlspecialchars($service['description']); ?></p>
+
+            <button class="book-btn btn btn-primary mt-2"
+              onclick="openBookingForm('<?php echo htmlspecialchars($service['service_name']); ?>')">Book Now</button>
+
+          </div>
+
+        <?php endforeach; ?>
+
+      <?php else: ?>
+
+        <p>No available services at the moment.</p>
+
+      <?php endif; ?>
+
     </div>
 
-    <!-- Consultancy Service -->
-    <div class="col-12 col-sm-6 col-md-4 service-item mb-4  ms-1">
-      <h3>Consultancy</h3>
-      <p>Our consultancy services focus on helping businesses and organizations implement sustainable marine solutions and conservation strategies.</p>
-      <button class="book-btn btn btn-primary" onclick="openBookingForm('Consultancy')">Book Now</button>
-    </div>
 
-    <div class="col-12 col-sm-6 col-md-4 service-item mb-4">
-      <h3>Marine Education</h3>
-      <p>We offer educational programs and workshops to raise awareness about marine conservation and sustainable practices.</p>
-      <button class="book-btn btn btn-primary" onclick="openBookingForm('Marine Education')">Book Now</button>
-    </div>
 
-  </div>
+  </section>
 
-  
-  
-</section>
-
-<header class="mt-4 bg-light">
+  <header class="mt-4 bg-light">
     <!-- <h2 class="text-center">Explore Our Services</h2> -->
   </header>
 
@@ -217,12 +228,14 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
           <div class="col-lg-3 col-md-6 col-12">
             <div class="single-footer">
               <h2>About Us</h2>
-              <p>Specializing in marine research, consultation, community engagement, and women empowerment for sustainable conservation.</p>
+              <p>Specializing in marine research, consultation, community engagement, and women empowerment for
+                sustainable conservation.</p>
               <ul class="social">
                 <li><a href="<?php echo $youtube; ?>" target="_blank"><i class="icofont-youtube"></i></a></li>
                 <li><a href="<?php echo $twitter; ?>" target="_blank"><i class="icofont-twitter"></i></a></li>
                 <li><a href="mailto:<?php echo $email; ?>"><i class="icofont-email"></i></a></li>
-                <li><a href="https://wa.me/<?php echo $phoneNumber; ?>" target="_blank"><i class="icofont-whatsapp"></i></a></li>
+                <li><a href="https://wa.me/<?php echo $phoneNumber; ?>" target="_blank"><i
+                      class="icofont-whatsapp"></i></a></li>
               </ul>
             </div>
           </div>
@@ -232,7 +245,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
               <ul>
                 <li><a href="index"><i class="fa fa-caret-right" aria-hidden="true"></i>Home</a></li>
                 <li><a href="about"><i class="fa fa-caret-right" aria-hidden="true"></i>About Us</a></li>
-                <li><a href="service.html"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
+                <li><a href="service"><i class="fa fa-caret-right" aria-hidden="true"></i>Services</a></li>
                 <li><a href="contact"><i class="fa fa-caret-right" aria-hidden="true"></i>Contact Us</a></li>
               </ul>
             </div>
@@ -251,7 +264,8 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
               <h2>Newsletter</h2>
               <p>Subscribe to our newsletter to get all our news in your inbox.</p>
               <form action="mail/mail.php" method="get" target="_blank" class="newsletter-inner">
-                <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''" onblur="this.placeholder = 'Your email address'" required="" type="email">
+                <input name="email" placeholder="Email Address" class="common-input" onfocus="this.placeholder = ''"
+                  onblur="this.placeholder = 'Your email address'" required="" type="email">
                 <button class="button"><i class="icofont icofont-paper-plane"></i></button>
               </form>
             </div>
@@ -266,7 +280,8 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
         <div class="row">
           <div class="col-lg-12 col-md-12 col-12">
             <div class="copyright-content">
-              <p>© Copyright 2024 | All Rights Reserved by <a href="https://www.wpthemesgrid.com" target="_blank">zanzimarinesolution.com</a></p>
+              <p>© Copyright 2024 | All Rights Reserved by <a href="https://www.wpthemesgrid.com"
+                  target="_blank">zanzimarinesolution.com</a></p>
             </div>
           </div>
         </div>

@@ -82,6 +82,7 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <th>Role</th>
                                         <?php endif; ?>
                                         <th>Activity</th>
+                                        <th>Day</th>
                                         <th>Time</th>
                                     </tr>
                                 </thead>
@@ -96,6 +97,9 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                             <td><?php echo htmlspecialchars($log['action']); ?></td>
                                             <td>
                                                 <?php
+                                                // Set the timezone to Dar es Salaam, Tanzania
+                                                date_default_timezone_set('Africa/Dar_es_Salaam');
+
                                                 // Convert the timestamp to a DateTime object
                                                 $activityDateTime = new DateTime($log['activity_timestamp']);
                                                 $currentDate = new DateTime();
@@ -107,11 +111,20 @@ $logs = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                 } elseif ($activityDateTime->format('Y-m-d') === $yesterdayDate->format('Y-m-d')) {
                                                     echo "Yesterday";
                                                 } else {
-                                                    // Display the actual date if it's neither today nor yesterday
-                                                    echo $activityDateTime->format('Y-m-d H:i:s'); // Adjust format as needed
+                                                    // Calculate the difference in days
+                                                    $interval = $currentDate->diff($activityDateTime);
+                                                    $daysAgo = $interval->days;
+
+                                                    // Display the number of days ago, starting from 2 days ago
+                                                    if ($daysAgo == 2) {
+                                                        echo "2 days ago";
+                                                    } elseif ($daysAgo > 2) {
+                                                        echo "{$daysAgo} days ago";
+                                                    }
                                                 }
                                                 ?>
                                             </td>
+                                            <td><?php echo htmlspecialchars($log['activity_timestamp']); ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </tbody>

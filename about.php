@@ -219,7 +219,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
                 </div>
                 <!-- News Title -->
                 <h1 class="news-title">
-                  <a href="news-single.html">Expert Solutions for Sustainable Marine and Coastal
+                  <a href="service">Expert Solutions for Sustainable Marine and Coastal
                     Management</a>
                 </h1>
 
@@ -343,7 +343,7 @@ $closingTime = htmlspecialchars($vmmData['closing_time'] ?? 'N/A');
             <div class="single-widget category">
               <h3 class="title">Blog Categories</h3>
               <ul class="categor-list">
-                <li><a href="#">Our Company</a></li>
+                <li><a href="about">Our Company</a></li>
                 <li><a href="#">Comment</a></li>
                 <li><a href="#">Bags Categories</a></li>
                 <li><a href="#">Management</a></li>

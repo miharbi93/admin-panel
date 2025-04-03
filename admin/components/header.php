@@ -114,11 +114,12 @@ $role = $_SESSION['role'];
                   <ul class="dropdown-menu dropdown-user animated fadeIn">
                     <div class="dropdown-user-scroll scrollbar-outer">
                       <li>
-                        <a class="dropdown-item" href="../system-settings/system_info">Account Setting</a>
+                        <a class="dropdown-item" href="../system-settings/system_info"><i class="fas fa-cogs"></i> Account Setting</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../system-logs/full_logs_info">System Logs</a>
+                        <a class="dropdown-item" href="../system-logs/full_logs_info"> <i class="fas fa-paw"></i> System Logs</a>
                         <div class="dropdown-divider"></div>
-                        <a class="dropdown-item" href="../logout.php">Logout</a>
+                        <a class="dropdown-item" href="../logout.php">
+                        <i class="fas fa-chevron-circle-left"></i> Logout</a>
                       </li>
                     </div>
                   </ul>

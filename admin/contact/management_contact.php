@@ -7,6 +7,9 @@ if (!isset($_SESSION['user_id'])) {
 }
 include '../components/header.php';
 
+include '../lock_screen.php';
+
+
 
 // Check for success message
 if (isset($_SESSION['success'])) {
